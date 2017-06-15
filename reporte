@@ -1,0 +1,4 @@
+
+En la funcion crearPersona inicializamos nuevo como malloc para darle la cantidad de memoria que ocuparia una persona.
+Para buena práctica de programación preguntamos si nuevo es diferente de NULL, en cuyo caso añadimos los miembros.
+En el main añadimos cada persona creada a la lista de persona, ya que de la forma en la que estaba las personas creadas quedaban en el "aire".

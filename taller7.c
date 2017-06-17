@@ -29,22 +29,27 @@ typedef struct listaHijosTDA{
 
 
 Persona *crearPersona(char *nombre, int edad, int peso){
-	Persona *nuevo = (Persona *)malloc(sizeof(Persona));
-	if(nuevo != NULL) {
-		nuevo->nombre = nombre;
-		nuevo->edad = edad;
-		nuevo->peso = peso;
+
+	Persona *nuevap = (Persona *)malloc(sizeof(Persona*));
+	if(nuevap != NULL) {
+		nuevap->nombre = nombre;
+		nuevap->edad = edad;
+		nuevap->peso = peso;
 	}
+	
+	nuevap->hijos = (ListaHijos*) malloc(sizeof(ListaHijos*));
 
-	nuevo->hijos = NULL;
-
-	return nuevo;					
+	return nuevap; 
 }
 
 
 int anadirHijo(Persona *padre, Persona *hijo){
 	
-	ListaHijos *lista_hijos = padre->hijos;
+	//Cambio
+	
+	ListaHijos *lista_hijos = (ListaHijos*)malloc(sizeof(ListaHijos));
+	lista_hijos = padre->hijos;
+
 
 	if(lista_hijos == NULL){
 		ListaHijos *lista = (ListaHijos *)malloc(sizeof(ListaHijos));
@@ -71,9 +76,11 @@ int anadirHijo(Persona *padre, Persona *hijo){
 		if(nuevo == NULL){
 			return -1;		
 		}
+		//Cambio
 		nuevo->per = hijo;
-		nuevo->siguiente = nuevo;
+		nuevo->siguiente = NULL;
 		lista_hijos->siguiente = nuevo;
+		padre->hijos = lista_hijos;
 		return 0;	
 		
 	}
@@ -83,7 +90,7 @@ int anadirHijo(Persona *padre, Persona *hijo){
 void mostrarInfoPersona(Persona *persona){
 	if(persona != NULL){
 		printf("Nombre: %s\nPeso: %d kg\nEdad: %d\n",persona->nombre, persona->peso, persona->edad);
-		if(persona->hijos == NULL){
+		if(persona->hijos->siguiente == NULL){
 			printf("Hijos: esta persona no tiene hijos\n");
 			return;
 		}
@@ -92,8 +99,9 @@ void mostrarInfoPersona(Persona *persona){
 			printf("Los hijos de %s son:\n", persona->nombre);
 
 			while(lista_hijos != NULL){
-				printf("- %s\n", lista_hijos->per->nombre);	
-				lista_hijos = lista_hijos->siguiente;		
+				//Cambio
+				printf("- %s\n", lista_hijos->siguiente->per->nombre);	
+				lista_hijos = persona->hijos->siguiente->siguiente;
 			}
 		}
 	}
@@ -103,17 +111,19 @@ void mostrarInfoPersona(Persona *persona){
 int main(void){
 
 	Persona *listaPersona[TAMANO];
-	
 
 	int i = 0;
 
 	for(i = 0; i <= TAMANO; i++){			
-		
-		
+
 		int edad = edadMin + rand() / (RAND_MAX / (edadMax - edadMin + 1) + 1);
 		int peso = pesoMin + rand() / (RAND_MAX / (pesoMax - pesoMin + 1) + 1);
-
-		listaPersona[i] = crearPersona(nombres[i],  edad, peso);
+	
+		//Cambio
+		Persona* persona = (Persona *) malloc(sizeof(Persona*));
+		persona = crearPersona(nombres[i],  edad, peso);
+		listaPersona[i] = persona;
+		
 
 	}
 
@@ -136,7 +146,3 @@ int main(void){
 	
 
 }
-
-
-
-

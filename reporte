@@ -1,4 +1,8 @@
 
-En la funcion crearPersona inicializamos nuevo como malloc para darle la cantidad de memoria que ocuparia una persona.
-Para buena práctica de programación preguntamos si nuevo es diferente de NULL, en cuyo caso añadimos los miembros.
-En el main añadimos cada persona creada a la lista de persona, ya que de la forma en la que estaba las personas creadas quedaban en el "aire".
+Las líneas 33, 40 y 50 daba segmentation fault dado a una mala inicialización del puntero.
+Línea 81, creaba bucle dado que no se le asignaba NULL a siguiente, en su lugar se le asignaba la lista.
+Línea 83, no se le volvía asignar a padre la lista_hijos.
+Línea 93, validacion de primer hijo no sea NULL.
+Línea 101, se valida que la persona no sea NULL.
+Línea 117, stacksmashing.
+Línea 125, faltaba asignacion de persona a la listaPersona.
